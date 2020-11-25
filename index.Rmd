@@ -1,0 +1,73 @@
+---
+title: "PF-0953 Programación geoespacial en R<br>Proyecto 02: Tablero de control de datos de COVID-19 en Costa Rica"
+author: "Manuel Vargas"
+date: "2020-11-25"
+output:
+  html_document:
+    theme: readable    
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: false  
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Descripción general
+En este proyecto, desarrollará un tablero de control mediante el paquete [flexdashboard](https://rmarkdown.rstudio.com/flexdashboard/) de [R](https://www.r-project.org/), junto con otros para generar tablas ([DT](https://rstudio.github.io/DT/)), gráficos estadísticos ([Plotly R](https://plotly.com/r/)) y mapas ([Leaflet](https://rstudio.github.io/leaflet/)). El resultado final será un documento en la sintaxis [R Markdown](https://rmarkdown.rstudio.com/) publicado en [GitHub Pages](https://pages.github.com/).
+
+## Fecha de entrega y entregables
+La fecha límite de entrega es el **miércoles 9 de diciembre de 2020. NO SE ACEPTARÁN ENTREGAS DESPUÉS DE ESA FECHA.** Debe enviarle al profesor por correo electrónico la dirección del sitio resultante en GitHub Pages.
+
+El proyecto puede realizarse en grupos de un máximo de tres estudiantes. Por favor copie el mensaje de correo a las direcciones de todos los integrantes del grupo e incluya los nombres de los integrantes en los metadatos del documento. Debe enviarse solamente un mensaje por grupo.
+
+## Trabajo previo
+Se recomienda leer el material preparado por el profesor para las lecciones, las tareas y proyectos desarrollados previamente, y consultar la documentación y tutoriales de los paquetes de R que se utilizarán.
+
+## Desarrollo
+Implemente un tablero de control de datos de la epidemia de [COVID](https://dle.rae.es/COVID) en Costa Rica, con base en los datos publicados por el Ministerio de Salud y disponibles en los siguientes archivos:
+
+- [Datos de COVID a nivel nacional para el 2020-11-17](https://github.com/pf0953-programaciongeoespacialr-2020/datos/blob/master/covid19/ms/11_17_CSV_GENERAL.csv)
+- [Datos de COVID por distrito para el 2020-11-17](https://github.com/pf0953-programaciongeoespacialr-2020/datos/blob/master/covid19/ms/11_17_CSV_DISTRITOS.csv)  (debe "limpiarlos" como se ha mostrado en clase)
+- Geometrías de distritos de Costa Rica:
+    - [Simplificadas](https://github.com/pf0953-programaciongeoespacialr-2020/datos/blob/master/delimitacion-territorial-administrativa/cr/ign/cr_limite_distrital_ign_wgs84.geojson) (recomendadas para usarse durante el desarrollo del tablero)
+    - [Detalladas](https://github.com/pf0953-programaciongeoespacialr-2020/datos/blob/master/delimitacion-territorial-administrativa/cr/ign/cr_distritos_ign_wgs84.geojson) (si se desea, pueden usarse para el producto final)
+
+Puede utilizar como base los tableros de control desarrollados en clase y disponibles en:
+
+* [Tablero de control básico](https://pf0953-programaciongeoespacialr-2020.github.io/tablero-control-covid19-cr/) ([código fuente](https://github.com/pf0953-programaciongeoespacialr-2020/tablero-control-covid19-cr))
+* [Tablero de control con mapa de calor](https://pf0953-programaciongeoespacialr-2020.github.io/tablero-control-covid19-cr-mapa-calor/) ([código fuente](https://github.com/pf0953-programaciongeoespacialr-2020/tablero-control-covid19-cr-mapa-calor))
+
+El tablero que desarrollará debe incluir:
+
+1. (20%) Una página llamada "Resumen" que contenga:
+    a. (6%) Seis controles de tipo *valueBox* que muestren las cantidades totales (a nivel nacional) de casos positivos, recuperados, activos, fallecidos, hospitalizados totales y hospitalizados en salón. Cada *valueBox* debe tener, además de la cantidad correspondiente, un color, una etiqueta y un ícono apropiados.
+    b. (7%) Un control de tipo [gauge](https://rmarkdown.rstudio.com/flexdashboard/using.html#gauges) que muestre el porcentaje de casos en unidad de cuidados intensivos con respecto a una **capacidad máxima de 359 espacios disponibles**.
+    c. (7%) Una tabla que muestre los datos de COVID en cada uno de los distritos de Costa Rica. Debe contener las columnas: Provincia, Cantón, Distrito, Positivos, Recuperados, Activos y Fallecidos. Los controles de la tabla deben estar en idioma español. La tabla debe contener funcionalidad para realizar búsquedas y ordenar los datos por cualquier columna.
+
+2. (20%) Una página llamada "Casos positivos" que contenga:
+    a. (1%) Un control de tipo *valueBox* que muestre la cantidad de casos positivos, junto con el color, etiquetas e ícono correspondientes.
+    b. (9%) Un mapa de coropletas que muestre la cantidad de casos positivos por distrito. El mapa debe incluir: una capa de fondo (como mínimo), un control de capas, una leyenda que muestre la relación colores-cantidad de casos y un control de escala.
+    c. (10%) Un [gráfico de pastel](https://plotly.com/r/pie-charts/) con diez segmentos (*slices*) que muestren los diez distritos con más casos positivos y el porcentaje que representa cada uno con respecto al total de casos. Debe incluirse un segmento adicional llamado "Otros" correspondiente a la suma de casos para los distritos restantes. El gráfico debe tener un título y una leyenda. Los nombres de los distritos y el porcentaje de casos correspondiente deben mostrarse claramente.
+
+3. (20%) Una página llamada "Casos recuperados" que contenga:
+    a. (1%) Un control de tipo *valueBox* que muestre la cantidad de casos recuperados, junto con el color, etiquetas e ícono correspondientes.
+    b. (9%) Un mapa de coropletas que muestre la cantidad de casos recuperados por distrito. El mapa debe incluir: una capa de fondo (como mínimo), un control de capas, una leyenda que muestre la relación colores-cantidad de casos y un control de escala.
+    c. (10%) Un [gráfico de pastel](https://plotly.com/r/pie-charts/) con diez segmentos (*slices*) que muestren los diez distritos con más casos recuperados y el porcentaje que representa cada uno con respecto al total de casos. Debe incluirse un segmento adicional llamado "Otros" correspondiente a la suma de casos para los distritos restantes. El gráfico debe tener un título y una leyenda. Los nombres de los distritos y el porcentaje de casos correspondiente deben mostrarse claramente.
+    
+4. (20%) Una página llamada "Casos activos" que contenga:
+    a. (1%) Un control de tipo *valueBox* que muestre la cantidad de casos activos, junto con el color, etiquetas e ícono correspondientes.
+    b. (9%) Un mapa de coropletas que muestre la cantidad de casos activos por distrito. El mapa debe incluir: una capa de fondo (como mínimo), un control de capas, una leyenda que muestre la relación colores-cantidad de casos y un control de escala.
+    c. (10%) Un [gráfico de pastel](https://plotly.com/r/pie-charts/) con diez segmentos (*slices*) que muestren los diez distritos con más casos activos y el porcentaje que representa cada uno con respecto al total de casos. Debe incluirse un segmento adicional llamado "Otros" correspondiente a la suma de casos para los distritos restantes. El gráfico debe tener un título y una leyenda. Los nombres de los distritos y el porcentaje de casos correspondiente deben mostrarse claramente.
+    
+5. (20%) Una página llamada "Casos fallecidos" que contenga:
+    a. (1%) Un control de tipo *valueBox* que muestre la cantidad de casos fallecidos, junto con el color, etiquetas e ícono correspondientes.
+    b. (9%) Un mapa de coropletas que muestre la cantidad de casos fallecidos por distrito. El mapa debe incluir: una capa de fondo (como mínimo), un control de capas, una leyenda que muestre la relación colores-cantidad de casos y un control de escala.
+    c. (10%) Un [gráfico de pastel](https://plotly.com/r/pie-charts/) con diez segmentos (*slices*) que muestren los diez distritos con más casos fallecidos y el porcentaje que representa cada uno con respecto al total de casos. Debe incluirse un segmento adicional llamado "Otros" correspondiente a la suma de casos para los distritos restantes. El gráfico debe tener un título y una leyenda. Los nombres de los distritos y el porcentaje de casos correspondiente deben mostrarse claramente.
+    
+Los números entre paréntesis corresponden al porcentaje de la nota final de cada aspecto a evaluar.
+
+## Recomendaciones
+Procure que las tablas, gráficos, mapas y demás componentes del tablero de control sean agradables a la vista y comuniquen apropiadamente la información que muestran. Se recomienda trabajar de forma incremental, probando continuamente los nuevos resultados y verificando que se muestran bien en el sitio web resultante.
